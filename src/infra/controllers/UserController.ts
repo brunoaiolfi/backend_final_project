@@ -2,6 +2,7 @@ import UserHandler from "../../application/useCases/handlers/UserHandler";
 import { Request, Response } from "express";
 import { UserDTO } from "../dtos/user";
 import UserCommand from "../../application/useCases/command/UserCommand";
+import UserEntity from "../../domain/entities/UserEntity";
 
 class UserController {
     private userHandler = new UserHandler()
@@ -27,23 +28,15 @@ class UserController {
     }
 
     public create = async (req: Request, res: Response) => {
-        const { email, password } = req.body;
+        const userDTO = req.body as UserEntity;
 
-        if (!email || !password) {
-            res.status(400).send("Email and password are required");
-            return;
-        }
-
-        if (!UserCommand.validatePassword(password)) {
+        if (!UserCommand.validateUser(userDTO)) {
             res.status(400).send("Password must have at least 8 characters");
             return;
         }
 
         try {
-            const user = await this.userHandler.create({
-                email,
-                password
-            });
+            const user = await this.userHandler.create(userDTO);
             
             const response = new UserDTO(user.id, user.email);
             res.status(201).json(response);

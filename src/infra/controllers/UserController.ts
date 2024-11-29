@@ -1,4 +1,4 @@
-import UserHandler from "../../application/useCases/handlers/UserHandler";
+import UserHandler from "../../application/useCases/handlers/user/UserHandler";
 import { Request, Response } from "express";
 import { UserDTO, UserInsertDTO } from "../dtos/user";
 import UserCommand from "../../application/useCases/command/UserCommand";

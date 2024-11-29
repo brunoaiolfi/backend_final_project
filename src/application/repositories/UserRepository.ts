@@ -11,6 +11,11 @@ class UserRepository extends DataBaseImplementation<UserModel>{
         const users = await this.select();
         return users;
     }
+
+    public async post(user: Omit<UserModel, "id">): Promise<UserModel> {
+        const newUser = await this.insert(user);
+        return newUser;
+    }
 }
 
 export default UserRepository;

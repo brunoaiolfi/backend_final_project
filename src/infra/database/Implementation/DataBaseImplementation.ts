@@ -12,6 +12,13 @@ class DataBaseImplementation<T> {
         const response = await (this.prisma[this.model] as any).findMany();
         return response;
     }
+
+    public async insert(data: any): Promise<T> {
+        const response = await (this.prisma[this.model] as any).create({
+            data
+        });
+        return response;
+    }
 }
 
 export default DataBaseImplementation;

@@ -2,7 +2,6 @@ import UserHandler from "../../application/useCases/handlers/UserHandler";
 import { Request, Response } from "express";
 import { UserDTO, UserInsertDTO } from "../dtos/user";
 import UserCommand from "../../application/useCases/command/UserCommand";
-import UserEntity from "../../domain/entities/UserEntity";
 
 class UserController {
     private userHandler = new UserHandler()
@@ -22,6 +21,19 @@ class UserController {
             });
 
             res.json(response);
+        } catch (error: any) {
+            res.send(error.message);
+        }
+    }
+
+    public getById = async (req: Request, res: Response) => {
+        const userId = parseInt(req.params.id);
+        try {
+            const user = await this.userHandler.getBy("id", userId);
+            const response = new UserDTO(user.id, user.email);
+
+            res.json(response);
+
         } catch (error: any) {
             res.send(error.message);
         }
@@ -65,11 +77,33 @@ class UserController {
             return;
         }
 
+        if (!await UserCommand.UserExists(userId)) {
+            res.status(404).send("User not found");
+            return;
+        }
+
         try {
             const user = await this.userHandler.update(userId, userDTO);
 
             const response = new UserDTO(user.id, user.email);
             res.json(response);
+
+        } catch (error: any) {
+            res.send(error.message);
+        }
+    }
+
+    public delete = async (req: Request, res: Response) => {
+        const userId = parseInt(req.params.id);
+
+        try {
+            if (!await UserCommand.UserExists(userId)) {
+                res.status(404).send("User not found");
+                return;
+            }
+
+            await this.userHandler.delete(userId);
+            res.status(200).send("User deleted");
 
         } catch (error: any) {
             res.send(error.message);

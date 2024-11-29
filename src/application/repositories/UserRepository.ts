@@ -27,6 +27,10 @@ class UserRepository extends DataBaseImplementation<UserModel>{
         const updatedUser = await this.update(id, user);
         return updatedUser;
     }
+
+    public async delete(id: number): Promise<void> {
+        await this.remove(id);
+    }
 }
 
 export default UserRepository;

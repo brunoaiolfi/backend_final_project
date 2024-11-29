@@ -24,5 +24,9 @@ class UserCommand {
 
         return user.id === id;
     }
+
+    public static UserExists = async (id: number): Promise<boolean> => {
+        return !!(await this.repository.getBy("id", id));
+    }
 }
 export default UserCommand;

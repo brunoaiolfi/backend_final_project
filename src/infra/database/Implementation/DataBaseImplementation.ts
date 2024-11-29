@@ -39,6 +39,14 @@ class DataBaseImplementation<T> {
         
         return response;
     }
+
+    public async remove(id: number): Promise<void> {
+        await (this.prisma[this.model] as any).delete({
+            where: {
+                id
+            }
+        });
+    }
 }
 
 export default DataBaseImplementation;

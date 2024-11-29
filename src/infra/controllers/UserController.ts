@@ -35,9 +35,14 @@ class UserController {
             return;
         }
 
+        if (!await UserCommand.isEmailAvailable(userDTO.email)) {
+            res.status(400).send("Email already in use");
+            return;
+        }
+
         try {
             const user = await this.userHandler.create(userDTO);
-            
+
             const response = new UserDTO(user.id, user.email);
             res.status(201).json(response);
 
@@ -55,17 +60,17 @@ class UserController {
             return;
         }
 
-        if (!await UserCommand.isEmailAvailable(userId, userDTO.email)) {
+        if (!await UserCommand.isEmailAvailable(userDTO.email, userId)) {
             res.status(400).send("Email already in use");
             return;
         }
-        
+
         try {
             const user = await this.userHandler.update(userId, userDTO);
-            
+
             const response = new UserDTO(user.id, user.email);
             res.json(response);
-            
+
         } catch (error: any) {
             res.send(error.message);
         }

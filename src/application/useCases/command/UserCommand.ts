@@ -16,10 +16,13 @@ class UserCommand {
         return this.validateEmail(user.email) && this.validatePassword(user.password);
     }
 
-    public static isEmailAvailable = async (id: number, email: string): Promise<boolean> => {
+    public static isEmailAvailable = async (email: string, id?: number): Promise<boolean> => {
         const user = await this.repository.getBy("email", email);
+        
+        if (!user) return true;
+        if (!id && user.id) return false;
 
-        return !user || user.id === id;
+        return user.id === id;
     }
 }
 export default UserCommand;

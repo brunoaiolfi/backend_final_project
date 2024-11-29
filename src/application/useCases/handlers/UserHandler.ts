@@ -1,3 +1,4 @@
+import UserEntity from "../../../domain/entities/UserEntity";
 import UserModel from "../../models/UserModel";
 import UserRepository from "../../repositories/UserRepository";
 
@@ -8,7 +9,7 @@ class UserHandler {
         return await this.repository.getAll();
     }
 
-    public async create(user: Omit<UserModel, "id">): Promise<UserModel> {
+    public async create(user: UserEntity): Promise<UserModel> {
         return await this.repository.post(user);
     }
 }

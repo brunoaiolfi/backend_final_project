@@ -7,3 +7,13 @@ export class UserDTO {
         this.email = email;
     }
 }
+
+export class UserInsertDTO {
+    email: string = "";
+    password: string = "";
+    
+    constructor(email: string, password: string) {
+        this.email = email;
+        this.password = password;
+    }
+}

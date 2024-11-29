@@ -1,6 +1,6 @@
 import UserHandler from "../../application/useCases/handlers/UserHandler";
 import { Request, Response } from "express";
-import { UserDTO } from "../dtos/user";
+import { UserDTO, UserInsertDTO } from "../dtos/user";
 import UserCommand from "../../application/useCases/command/UserCommand";
 import UserEntity from "../../domain/entities/UserEntity";
 
@@ -28,9 +28,9 @@ class UserController {
     }
 
     public create = async (req: Request, res: Response) => {
-        const userDTO = req.body as UserEntity;
+        const userDTO = req.body as UserInsertDTO;
 
-        if (!UserCommand.validateUser(userDTO)) {
+        if (!UserCommand.validateUserDTO(userDTO)) {
             res.status(400).send("Email or Password invalid. Password must have at least 8 characters");
             return;
         }
@@ -41,6 +41,31 @@ class UserController {
             const response = new UserDTO(user.id, user.email);
             res.status(201).json(response);
 
+        } catch (error: any) {
+            res.send(error.message);
+        }
+    }
+
+    public update = async (req: Request, res: Response) => {
+        const userDTO = req.body as UserInsertDTO;
+        const userId = parseInt(req.params.id);
+
+        if (!UserCommand.validateUserDTO(userDTO)) {
+            res.status(400).send("Email or Password invalid. Password must have at least 8 characters");
+            return;
+        }
+
+        if (!await UserCommand.isEmailAvailable(userId, userDTO.email)) {
+            res.status(400).send("Email already in use");
+            return;
+        }
+        
+        try {
+            const user = await this.userHandler.update(userId, userDTO);
+            
+            const response = new UserDTO(user.id, user.email);
+            res.json(response);
+            
         } catch (error: any) {
             res.send(error.message);
         }

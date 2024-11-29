@@ -31,7 +31,7 @@ class UserController {
         const userDTO = req.body as UserEntity;
 
         if (!UserCommand.validateUser(userDTO)) {
-            res.status(400).send("Password must have at least 8 characters");
+            res.status(400).send("Email or Password invalid. Password must have at least 8 characters");
             return;
         }
 

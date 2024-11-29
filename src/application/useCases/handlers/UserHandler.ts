@@ -1,6 +1,6 @@
 import UserEntity from "../../../domain/entities/UserEntity";
 import UserModel from "../../models/UserModel";
-import UserRepository from "../../repositories/UserRepository";
+import UserRepository from "../../repositories/user/UserRepository";
 
 class UserHandler {
     private repository = new UserRepository();

@@ -1,5 +1,5 @@
 import UserEntity from "../../../domain/entities/UserEntity";
-import UserRepository from "../../repositories/UserRepository";
+import UserRepository from "../../repositories/user/UserRepository";
 
 class UserCommand {
     private static repository = new UserRepository();

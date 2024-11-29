@@ -1,7 +1,8 @@
-import UserHandler from "../../application/useCases/handlers/user/UserHandler";
+import UserHandler from "../../../application/useCases/handlers/user/UserHandler";
 import { Request, Response } from "express";
-import { UserDTO, UserInsertDTO } from "../dtos/user";
-import UserCommand from "../../application/useCases/command/UserCommand";
+import { UserDTO, UserInsertDTO } from "../../dtos/user";
+import UserCommand from "../../../application/useCases/command/user/UserCommand";
+import AuthCommand from "../../../application/useCases/command/auth/AuthCommand";
 
 class UserController {
     private userHandler = new UserHandler()
@@ -52,10 +53,10 @@ class UserController {
             return;
         }
 
-        const hashedPassword = await UserCommand.hashPassword(userDTO.password);
+        const hashedPassword = AuthCommand.hashPassword(userDTO.password);
 
         try {
-            const user = await this.userHandler.create({...userDTO, password: hashedPassword});
+            const user = await this.userHandler.create({ ...userDTO, password: hashedPassword });
 
             const response = new UserDTO(user.id, user.email);
             res.status(201).json(response);
@@ -84,10 +85,10 @@ class UserController {
             return;
         }
 
-        const hashedPassword = await UserCommand.hashPassword(userDTO.password);
+        const hashedPassword = AuthCommand.hashPassword(userDTO.password);
 
         try {
-            const user = await this.userHandler.update(userId, {...userDTO, password: hashedPassword});
+            const user = await this.userHandler.update(userId, { ...userDTO, password: hashedPassword });
 
             const response = new UserDTO(user.id, user.email);
             res.json(response);

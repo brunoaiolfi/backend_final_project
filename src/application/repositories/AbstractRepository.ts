@@ -1,5 +1,5 @@
 import DataBaseImplementation from "../../infra/database/Implementation/DataBaseImplementation";
-import UserEntity from "../../domain/entities/UserEntity";
+import UserEntity from "../../domain/entities/user/UserEntity";
 import { PrismaClient } from "@prisma/client";
 
 class AbstractRepository<T> extends DataBaseImplementation<T> {

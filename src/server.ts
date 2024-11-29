@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from "cors";
-import userRouter from './infra/routes/user';
+import userRoutes from './infra/routes/user/UserRoutes';
+import authRoutes from './infra/routes/auth/AuthRoutes';
 
 const app = express();
 const port = 3000;
@@ -12,7 +13,8 @@ app.get('/', (req, res) => {
 app.use(cors());
 app.use(express.json());
 
-app.use("/users", userRouter);
+app.use("/auth", authRoutes); // public
+app.use("/users", userRoutes); // private
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

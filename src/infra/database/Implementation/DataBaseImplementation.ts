@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 class DataBaseImplementation<T> {
     private model: keyof PrismaClient;
-    private prisma = new PrismaClient();
+    protected prisma = new PrismaClient();
 
     constructor(model: keyof PrismaClient) {
         this.model = model;

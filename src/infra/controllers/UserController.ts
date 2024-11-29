@@ -52,8 +52,10 @@ class UserController {
             return;
         }
 
+        const hashedPassword = await UserCommand.hashPassword(userDTO.password);
+
         try {
-            const user = await this.userHandler.create(userDTO);
+            const user = await this.userHandler.create({...userDTO, password: hashedPassword});
 
             const response = new UserDTO(user.id, user.email);
             res.status(201).json(response);
@@ -77,13 +79,15 @@ class UserController {
             return;
         }
 
-        if (!await UserCommand.UserExists(userId)) {
+        if (!await UserCommand.userExists(userId)) {
             res.status(404).send("User not found");
             return;
         }
 
+        const hashedPassword = await UserCommand.hashPassword(userDTO.password);
+
         try {
-            const user = await this.userHandler.update(userId, userDTO);
+            const user = await this.userHandler.update(userId, {...userDTO, password: hashedPassword});
 
             const response = new UserDTO(user.id, user.email);
             res.json(response);
@@ -97,7 +101,7 @@ class UserController {
         const userId = parseInt(req.params.id);
 
         try {
-            if (!await UserCommand.UserExists(userId)) {
+            if (!await UserCommand.userExists(userId)) {
                 res.status(404).send("User not found");
                 return;
             }

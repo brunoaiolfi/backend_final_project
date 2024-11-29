@@ -1,5 +1,5 @@
 class AbstractHandler<Model, Entity> {
-    private repository: any;
+    protected repository: any;
 
     constructor(repositoryClass: any) {
         this.repository = new repositoryClass();
@@ -13,12 +13,12 @@ class AbstractHandler<Model, Entity> {
         return await this.repository.getBy(key, value);
     }
 
-    public async create(user: Entity): Promise<Model> {
-        return await this.repository.post(user);
+    public async create(entity: Entity): Promise<Model> {
+        return await this.repository.post(entity);
     }
 
-    public async update(id: number, user: Entity): Promise<Model> {
-        return await this.repository.put(id, user);
+    public async update(id: number, entity: Entity): Promise<Model> {
+        return await this.repository.put(id, entity);
     }
 
     public async delete(id: number): Promise<void> {

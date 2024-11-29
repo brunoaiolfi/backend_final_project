@@ -1,3 +1,4 @@
+import { createHash } from "crypto";
 import UserEntity from "../../../domain/entities/UserEntity";
 import UserRepository from "../../repositories/user/UserRepository";
 
@@ -25,8 +26,14 @@ class UserCommand {
         return user.id === id;
     }
 
-    public static UserExists = async (id: number): Promise<boolean> => {
+    public static userExists = async (id: number): Promise<boolean> => {
         return !!(await this.repository.getBy("id", id));
+    }
+
+    public static hashPassword = async (password: string): Promise<string> => {
+        const hash = createHash("sha256");
+        hash.update(password);
+        return hash.digest("hex");
     }
 }
 export default UserCommand;

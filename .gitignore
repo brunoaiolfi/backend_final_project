@@ -1,1 +1,3 @@
 node_modules
+./src/infra/database/prisma/dev.db
+dev.db

@@ -1,4 +1,4 @@
-import DataBaseImplementation from "../../infra/database/Implementation/DataBaseImplementation";
+import DataBaseImplementation from "../../infra/Implementations/database/DataBaseImplementation";
 import UserEntity from "../../domain/entities/user/UserEntity";
 import { PrismaClient } from "@prisma/client";
 

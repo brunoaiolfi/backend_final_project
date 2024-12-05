@@ -2,7 +2,6 @@ import express from 'express';
 import cors from "cors";
 import userRoutes from './infra/routes/user/UserRoutes';
 import authRoutes from './infra/routes/auth/AuthRoutes';
-import UserController from './infra/controllers/user/UserController';
 import { VerifyTokenMiddleware } from './infra/middlewares/VerifyTokenMiddleware';
 import contentRoutes from './infra/routes/content/ContentRoutes';
 

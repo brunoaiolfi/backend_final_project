@@ -15,12 +15,39 @@ class ContentController {
                 return;
             }
 
-            const response = this.contentHandler.create(dto);
+            const embedding = await this.contentHandler.handleGenerateEmbeddings(dto.text);
+            const response = await this.contentHandler.create({ ...dto, embedding });
 
-            res.status(201).json(response);
+            res.status(201).json({ response });
             return;
-        } catch (error) {
-            res.status(500).send(error);
+        } catch (error: any) {
+            res.send(error.message);
+        }
+    }
+
+    public search = async (req: Request, res: Response) => {
+        try {
+            const dto = req.body as ContentDTO;
+
+            if (!ContentCommand.validateText(dto.text)) {
+                res.send("Please review your content, The min length is 12 characters!");
+                return;
+            }
+
+            const embedding = await this.contentHandler.handleGenerateEmbeddings(dto.text);
+
+            const semanticSearch = await this.contentHandler.search(embedding)
+
+            if (!semanticSearch) {
+                res.status(404).send("No contents found");
+                return;
+            }
+
+            res.json(semanticSearch);
+            return;
+
+        } catch (error: any) {
+            res.send(error.message);
         }
     }
 
@@ -34,7 +61,7 @@ class ContentController {
             }
 
             const response = contents.map(c => {
-                const content = new ContentDTO(c.id, c.text);
+                const content = new ContentDTO(c.id, c.text, c.embedding);
                 return content;
             });
 
@@ -52,7 +79,7 @@ class ContentController {
                 res.status(404).send("Content not found");
                 return;
             }
-            
+
             await this.contentHandler.delete(contentId);
 
             res.status(200).send("Content deleted");

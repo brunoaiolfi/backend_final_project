@@ -1,5 +1,3 @@
-import { EmbeddingModel, FlagEmbedding } from "fastembed";
-import { EmbeddingModel, FlagEmbedding } from "fastembed";
 import ContentEntity from "../../../../domain/entities/content/ContentEntity";
 import ContentModel from "../../../models/ContentModel";
 import ContentRepository from "../../../repositories/content/ContentRepository";

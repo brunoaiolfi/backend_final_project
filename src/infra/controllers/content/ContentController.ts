@@ -60,7 +60,6 @@ class ContentController {
 
             const response = contents.map(c => {
                 const content = new ContentDTO(c.id, c.text, c.embedding);
-                const content = new ContentDTO(c.id, c.text, c.embedding);
                 return content;
             });
 

@@ -17,8 +17,6 @@ class ContentController {
 
             const embedding = await this.contentHandler.handleGenerateEmbeddings(dto.text);
             const response = await this.contentHandler.create({ ...dto, embedding });
-            const embedding = await this.contentHandler.handleGenerateEmbeddings(dto.text);
-            const response = await this.contentHandler.create({ ...dto, embedding });
 
             res.status(201).json({ response });
             return;

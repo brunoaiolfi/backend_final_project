@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import AbstractRepository from "../AbstractRepository";
 
 class ContentRepository extends AbstractRepository<ContentRepository>{

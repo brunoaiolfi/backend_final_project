@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/server.ts",
-    "build": "tsc"
+    "start": "npm run swagger-autogen && ts-node src/server.ts",
+    "dev": "npm run swagger-autogen && nodemon src/server.ts",
+    "build": "tsc",
+    "swagger-autogen": "ts-node ./src/infra/implementations/swagger/Swagger.ts"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,9 @@
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.10.1",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.7",
+    "swagger-autogen": "^2.23.7",
     "typescript": "^5.7.2"
   },
   "dependencies": {
@@ -24,8 +29,12 @@
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "express": "^4.21.1",
+    "fastembed": "^1.14.1",
     "jsonwebtoken": "^9.0.2",
+    "langchain": "^0.3.6",
     "nodemon": "^3.1.7",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "ts-node": "^10.9.2"
   }
 }

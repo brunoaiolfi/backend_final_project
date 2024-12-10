@@ -47,6 +47,10 @@ class DataBaseImplementation<T> {
             }
         });
     }
+
+    public async $queryRawUnsafe(query: string): Promise<any> {
+        return await this.prisma.$queryRawUnsafe(query);
+    }
 }
 
 export default DataBaseImplementation;

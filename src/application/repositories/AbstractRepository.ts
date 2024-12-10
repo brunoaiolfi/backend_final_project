@@ -31,6 +31,11 @@ class AbstractRepository<T> extends DataBaseImplementation<T> {
     public async delete(id: number): Promise<void> {
         await this.remove(id);
     }
+
+    public async unsafeQuery(query: string): Promise<any> {
+        const res = await this.$queryRawUnsafe(query);
+        return res;
+    }
 }
 
 export default AbstractRepository;
